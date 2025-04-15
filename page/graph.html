@@ -1,0 +1,110 @@
+<!--
+	THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/en/editor.html?c=graph&lang=js&code=LYTwwgFghgTgLgOgM4QPYHcAyqoBMCWAdgOYAUAlANwBQAJAsQKZwBSAygPIBypAShxwAqAfQAKAQUEAJAAQBqGQHIA9LihwoyqEiTNV6zQBtGSALTB8umFABGxpAgBWSVIUUAaGQDMAroQDGcPiuMqTE1gAOEOQyAN7UMjKgkLCIEPi4jNh4RGRUCTLhUFEIhKiZDl6oMACiUP4QpL4BQSGkZZkx8YmJHYwIhraMhjIAvHEFPTIoGABcMn3IIMA2qIZs-ABejDIAfDIAzAAMkzIAvjSJZ_mJqBGthGMTU0FwxvPdUzJwjAAecPNFJgTDIALKWRjWOwmDynRJIHw2H7_QEAEUYXigPkMcBkgxAqB8cFhX2-d0BqzgcFQwBJX2MXgBShg-GIEGJpzO7lO1LWQQiHy5p2MTEIuHmAG04c9STJlMppsNGIFGLhQeVGICkLljHTSWoNPMiiV_OpGMRqvgTAhgMUmn5AsFHqQoF1pVMYMwfDBHlBSlBgIxLrLrtKzqcALrcqZQQj4W0PVHe9RO-YARgArEcjtGerH4ynXHVtSQAKoRA2apQARx8RCC_gAkoQOES9YqWSZJdLPqTCAGq0CQeCrLZ7O2XiAIoPjRAJz0RYwxVJUAA3SGYIgAa3mmMMulzpPxhKZijKhEY88SBqgRsiEFKGqQh_p26Qd-KD8Mb5fU1NPwtTt30Ke8EH_c1LRMX8ehgHBgHmOAYB8RhoMSQYbGGD53R6CJUG1B5ARZNliVQnoqhgBMfhgQFYhsM5FGwoVZTxIhGDYOAQHeGVmP8NZqi1QkYH8S9SMSfxvXXC8dHmI4EAORjSMYYAom0SwsOYxIqnE4DFDwRx6iXfwQCvBdWPYziq17DT0AyOAIHTE4NPORiw0jAoLgKZJoHgZBmA4e4nVIO4Hnya5KCAA
+	⚠ Please be aware that this chart is not an official demo of Apache ECharts but is made by user-generated code.
+-->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+  <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+  <div id="container" style="height: 100%"></div>
+
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  
+  <!-- Uncomment this line if you want to dataTool extension
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use gl extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-stat extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-stat/dist/ecStat.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to echarts-graph-modularity extension
+  <script type="text/javascript" src="https://echarts.apache.org/en/js/vendors/echarts-graph-modularity/dist/echarts-graph-modularity.min.js"></script>
+  -->
+  <!-- Uncomment this line if you want to use map
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
+  -->
+  <!-- Uncomment these two lines if you want to use bmap extension
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
+  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+  -->
+
+  <script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false
+    });
+    var app = {};
+    var ROOT_PATH = 'https://echarts.apache.org/examples';
+    var option;
+
+    myChart.showLoading();
+$.getJSON(ROOT_PATH + '/data/asset/data/les-miserables.json', function (graph) {
+  myChart.hideLoading();
+  graph.nodes.forEach(function (node) {
+    node.label = {
+      show: node.symbolSize > 30
+    };
+  });
+  option = {
+    title: {
+      text: 'Les Miserables',
+      subtext: 'Default layout',
+      top: 'bottom',
+      left: 'right'
+    },
+    tooltip: {},
+    legend: [
+      {
+        // selectedMode: 'single',
+        data: graph.categories.map(function (a) {
+          return a.name;
+        })
+      }
+    ],
+    animationDuration: 1500,
+    animationEasingUpdate: 'quinticInOut',
+    series: [
+      {
+        name: 'Les Miserables',
+        type: 'graph',
+        legendHoverLink: false,
+        layout: 'none',
+        data: graph.nodes,
+        links: graph.links,
+        categories: graph.categories,
+        roam: true,
+        label: {
+          position: 'right',
+          formatter: '{b}'
+        },
+        lineStyle: {
+          color: 'source',
+          curveness: 0.3
+        },
+        emphasis: {
+          focus: 'adjacency',
+          lineStyle: {
+            width: 10
+          }
+        }
+      }
+    ]
+  };
+  myChart.setOption(option);
+});
+
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+  </script>
+</body>
+</html>
